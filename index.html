@@ -167,11 +167,31 @@
           log(`targetFound: página/index ${i}`);
           if (video) {
             const el = video.components.material.material.map.image;
-            el.currentTime = 0;
-            el.muted = true;      // arranca solo, en silencio
-            el.play().catch(err => log('play() falló: ' + err, true));
+            el.muted = true; // arranca solo, en silencio
             activeVideo = el;
             unmuteBtn.style.display = 'block';
+
+            const tryPlay = () => {
+              el.currentTime = 0;
+              el.play().catch(err => log('play() falló: ' + err, true));
+            };
+
+            if (el.readyState >= 2) {
+              // ya tiene datos suficientes, reproducir directo
+              tryPlay();
+            } else {
+              // recargar y esperar a que esté listo (buffer perdido por inactividad/red lenta)
+              log(`recargando ${el.id} (readyState=${el.readyState})...`);
+              el.load();
+              const onCanPlay = () => {
+                el.removeEventListener('canplay', onCanPlay);
+                tryPlay();
+              };
+              el.addEventListener('canplay', onCanPlay);
+              el.addEventListener('error', () => {
+                log(`ERROR recargando ${el.id}: ${el.error ? el.error.message : 'desconocido'}`, true);
+              }, { once: true });
+            }
           }
         });
         entity.addEventListener('targetLost', () => {
