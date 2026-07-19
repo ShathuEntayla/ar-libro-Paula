@@ -13,10 +13,18 @@
       text-align:center; font-family:sans-serif; color:#fff;
       background:rgba(0,0,0,0.4); z-index:999;
     }
+    #debugLog {
+      position:fixed; bottom:0; left:0; width:100%; max-height:35%;
+      overflow-y:auto; font-family:monospace; font-size:11px; color:#0f0;
+      background:rgba(0,0,0,0.75); z-index:999; padding:6px; box-sizing:border-box;
+    }
+    #debugLog div { white-space:pre-wrap; border-bottom:1px solid #333; padding:2px 0; }
+    #debugLog .err { color:#f55; }
   </style>
 </head>
 <body>
   <div id="overlay">Apunta la cámara a una página del libro</div>
+  <div id="debugLog"></div>
 
   <!--
     targets.mind = archivo compilado con TODAS las imágenes de las páginas.
@@ -38,13 +46,18 @@
         - un enlace directo de archive.org: https://archive.org/download/tuitem/clip0.mp4
         muted="true" es obligatorio para que el autoplay funcione sin tocar la pantalla.
       -->
-      <video id="clip0" src="./videos/clip0.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
-      <video id="clip1" src="./videos/clip1.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
-      <video id="clip2" src="./videos/clip2.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
-      <!--
-        Copia este patrón hasta clip19 para tener 20 clips.
-        Recuerda añadir también su <a-entity mindar-image-target> más abajo.
-      -->
+      <video id="clip0" src="./videos/01_mar25.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip1" src="./videos/02_may25.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip2" src="./videos/03_jul25.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip3" src="./videos/04_ago25.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip4" src="./videos/05_sep25.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip5" src="./videos/06_oruga.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip6" src="./videos/07_oct25.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip7" src="./videos/08a_dic25_cumpleShathu.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip8" src="./videos/08b_dic25_burgohondo.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip9" src="./videos/09_ene26.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip10" src="./videos/10_burgohondo_red.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip11" src="./videos/11_feb26.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"></a-camera>
@@ -64,7 +77,50 @@
       <a-video src="#clip2" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
     </a-entity>
 
-    <!-- Copia un bloque <a-entity mindar-image-target="targetIndex: N"> por cada página nueva, hasta 19 -->
+    <!-- Página 3 -->
+    <a-entity mindar-image-target="targetIndex: 3">
+      <a-video src="#clip3" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+    </a-entity>
+
+    <!-- Página 4 -->
+    <a-entity mindar-image-target="targetIndex: 4">
+      <a-video src="#clip4" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+    </a-entity>
+
+    <!-- Página 5 -->
+    <a-entity mindar-image-target="targetIndex: 5">
+      <a-video src="#clip5" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+    </a-entity>
+
+    <!-- Página 6 -->
+    <a-entity mindar-image-target="targetIndex: 6">
+      <a-video src="#clip6" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+    </a-entity>
+
+    <!-- Página 7 -->
+    <a-entity mindar-image-target="targetIndex: 7">
+      <a-video src="#clip7" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+    </a-entity>
+
+    <!-- Página 8 -->
+    <a-entity mindar-image-target="targetIndex: 8">
+      <a-video src="#clip8" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+    </a-entity>
+
+    <!-- Página 9 -->
+    <a-entity mindar-image-target="targetIndex: 9">
+      <a-video src="#clip9" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+    </a-entity>
+
+    <!-- Página 10 -->
+    <a-entity mindar-image-target="targetIndex: 10">
+      <a-video src="#clip10" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+    </a-entity>
+
+    <!-- Página 11 (sin vídeo asignado) -->
+    <a-entity mindar-image-target="targetIndex: 11">
+      <a-video src="#clip11" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+    </a-entity>
   </a-scene>
 
   <button id="unmuteBtn" style="
@@ -75,23 +131,51 @@
   </button>
 
   <script>
+    // ---- DEBUG LOG ----
+    const debugLog = document.getElementById('debugLog');
+    function log(msg, isErr) {
+      const line = document.createElement('div');
+      if (isErr) line.className = 'err';
+      const t = new Date().toLocaleTimeString();
+      line.textContent = `[${t}] ${msg}`;
+      debugLog.appendChild(line);
+      debugLog.scrollTop = debugLog.scrollHeight;
+      console.log(msg);
+    }
+    window.addEventListener('error', (e) => log('window error: ' + e.message, true));
+
     let activeVideo = null;
     const unmuteBtn = document.getElementById('unmuteBtn');
 
     document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('[mindar-image-target]').forEach((entity) => {
+      log('DOM cargado, esperando a-scene...');
+
+      const sceneEl = document.querySelector('a-scene');
+      sceneEl.addEventListener('loaded', () => log('a-scene loaded (A-Frame listo)'));
+      sceneEl.addEventListener('arReady', () => log('MindAR listo (arReady)'));
+      sceneEl.addEventListener('arError', (e) => log('arError: ' + JSON.stringify(e.detail), true));
+
+      // Comprobar carga de cada vídeo
+      document.querySelectorAll('a-assets video').forEach((v) => {
+        v.addEventListener('loadeddata', () => log(`vídeo OK: ${v.id} (${v.src})`));
+        v.addEventListener('error', () => log(`ERROR cargando vídeo: ${v.id} (${v.src})`, true));
+      });
+
+      document.querySelectorAll('[mindar-image-target]').forEach((entity, i) => {
         const video = entity.querySelector('a-video');
         entity.addEventListener('targetFound', () => {
+          log(`targetFound: página/index ${i}`);
           if (video) {
             const el = video.components.material.material.map.image;
             el.currentTime = 0;
             el.muted = true;      // arranca solo, en silencio
-            el.play();
+            el.play().catch(err => log('play() falló: ' + err, true));
             activeVideo = el;
             unmuteBtn.style.display = 'block';
           }
         });
         entity.addEventListener('targetLost', () => {
+          log(`targetLost: página/index ${i}`);
           if (video) {
             const el = video.components.material.material.map.image;
             el.pause();
