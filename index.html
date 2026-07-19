@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>AR del libro</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  <style>
+    html, body { margin:0; height:100%; overflow:hidden; }
+    #overlay {
+      position:fixed; top:0; left:0; width:100%; padding:10px;
+      text-align:center; font-family:sans-serif; color:#fff;
+      background:rgba(0,0,0,0.4); z-index:999;
+    }
+  </style>
+</head>
+<body>
+  <div id="overlay">Apunta la cámara a una página del libro</div>
+
+  <!--
+    targets.mind = archivo compilado con TODAS las imágenes de las páginas.
+    Cada <a-entity mindar-image-target targetIndex="N"> = una página.
+    targetIndex sigue el orden en que subiste las imágenes al compilador.
+  -->
+  <a-scene
+    mindar-image="imageTargetSrc: ./targets/targets.mind; autoStart: true; uiScanning: yes;"
+    color-space="sRGB"
+    embedded
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: true"
+  >
+    <a-assets>
+      <!--
+        src puede ser:
+        - un archivo local: ./videos/clip0.mp4
+        - un enlace directo de archive.org: https://archive.org/download/tuitem/clip0.mp4
+        muted="true" es obligatorio para que el autoplay funcione sin tocar la pantalla.
+      -->
+      <video id="clip0" src="./videos/clip0.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip1" src="./videos/clip1.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="clip2" src="./videos/clip2.mp4" preload="auto" loop="false" muted="true" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <!--
+        Copia este patrón hasta clip19 para tener 20 clips.
+        Recuerda añadir también su <a-entity mindar-image-target> más abajo.
+      -->
+    </a-assets>
+
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"></a-camera>
+
+    <!-- Página 0 -->
+    <a-entity mindar-image-target="targetIndex: 0">
+      <a-video src="#clip0" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+    </a-entity>
+
+    <!-- Página 1 -->
+    <a-entity mindar-image-target="targetIndex: 1">
+      <a-video src="#clip1" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+    </a-entity>
+
+    <!-- Página 2 -->
+    <a-entity mindar-image-target="targetIndex: 2">
+      <a-video src="#clip2" width="1" height="0.6" position="0 0 0" rotation="0 0 0"></a-video>
+    </a-entity>
+
+    <!-- Copia un bloque <a-entity mindar-image-target="targetIndex: N"> por cada página nueva, hasta 19 -->
+  </a-scene>
+
+  <button id="unmuteBtn" style="
+      position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+      z-index:999; padding:10px 18px; border:none; border-radius:20px;
+      background:#fff; font-family:sans-serif; font-size:14px; display:none;">
+    🔊 Activar sonido
+  </button>
+
+  <script>
+    let activeVideo = null;
+    const unmuteBtn = document.getElementById('unmuteBtn');
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[mindar-image-target]').forEach((entity) => {
+        const video = entity.querySelector('a-video');
+        entity.addEventListener('targetFound', () => {
+          if (video) {
+            const el = video.components.material.material.map.image;
+            el.currentTime = 0;
+            el.muted = true;      // arranca solo, en silencio
+            el.play();
+            activeVideo = el;
+            unmuteBtn.style.display = 'block';
+          }
+        });
+        entity.addEventListener('targetLost', () => {
+          if (video) {
+            const el = video.components.material.material.map.image;
+            el.pause();
+            unmuteBtn.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    unmuteBtn.addEventListener('click', () => {
+      if (activeVideo) {
+        activeVideo.muted = false;
+        unmuteBtn.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
